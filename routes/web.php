@@ -15,11 +15,7 @@ use App\Http\Controllers\SeriesController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return to_route('series.index');
 });
 
-Route::controller(SeriesController::class)->group(function(){
-    Route::get('/series', 'index');
-    Route::get('/series/criar', 'create');
-    Route::post('/series/salvar', 'store');
-});
+Route::resource('series', SeriesController::class);
