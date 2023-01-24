@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\serie;
+use App\Models\Serie;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
@@ -21,10 +21,7 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
-        $nomeSerie = $request->input('nome');
-        $serie = new serie();
-        $serie->nome = $nomeSerie;
-        $serie->save();
+        Serie::create($request->all());
 
         return redirect('/series');
     }
