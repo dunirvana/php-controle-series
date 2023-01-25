@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeriesController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +15,8 @@ use App\Http\Controllers\SeriesController;
 */
 
 Route::get('/', function () {
-    return to_route('series.index');
+    return redirect('/series');
 });
 
-Route::resource('series', SeriesController::class);
+Route::resource('/series', SeriesController::class)
+    ->except(['show']);
