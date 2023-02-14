@@ -19,7 +19,7 @@ use App\Http\Controllers\EpisodesController;
 
 Route::get('/', function () {
     return redirect('/series');
-});
+})->middleware(\App\Http\Middleware\Autenticador::class);
 
 Route::resource('/series', SeriesController::class)
     ->except(['show']);
