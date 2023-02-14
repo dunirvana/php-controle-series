@@ -18,4 +18,11 @@ class LoginController
         }
           return to_route('series.index');
     }
+
+    public function destroy()
+    {
+        Auth::logout();
+
+        return to_route('login');
+    }
 }
