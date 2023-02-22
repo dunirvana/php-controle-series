@@ -19,6 +19,9 @@ class DeleteSeriesCover implements ShouldQueue
 
     public function handle(SeriesDeletedEvent $event)
     {
-        Storage::disk('public')->delete($event->seriesCoverPath);
+        if ($event->seriesCoverPath != null) {
+            Storage::disk('public')->delete($event->seriesCoverPath);
+        }
+
     }
 }

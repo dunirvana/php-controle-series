@@ -20,7 +20,7 @@ class SeriesDeleted
      * @return void
      */
     public function __construct(
-        public readonly string $seriesCoverPath,
+        public string $seriesCoverPath,
     )
     {
         //
