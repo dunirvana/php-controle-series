@@ -6,7 +6,7 @@ use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\EpisodesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Middleware\Autenticador;
 
 /*
 |--------------------------------------------------------------------------
