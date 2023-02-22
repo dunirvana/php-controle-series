@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use App\Events\SeriesCreated as SeriesCreatedEvent;
 
-class EmailUsersAboutSeriesCreated
+class EmailUsersAboutSeriesCreated implements ShouldQueue
 {
     /**
      * Create the event listener.

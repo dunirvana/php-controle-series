@@ -56,6 +56,10 @@ class SeriesController extends Controller
     {
         $series->delete();
 
+        \App\Events\SeriesDeleted::dispatch(
+            $series->cover,
+        );
+
         return to_route('series.index')
             ->with('mensagem.sucesso', "Série '{$series->nome}' removida com sucesso");
     }
