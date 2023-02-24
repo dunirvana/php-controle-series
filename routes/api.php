@@ -19,5 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/series', \App\Http\Controllers\Api\SeriesController::class);
+Route::get('/series/{id}/seasons', [\App\Http\Controllers\Api\SeriesController::class, 'seasons']);
 
 Route::post('/upload', [\App\Http\Controllers\Api\UploadController::class, 'upload']);
