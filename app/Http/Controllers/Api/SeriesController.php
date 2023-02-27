@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SeriesFormRequest;
 use App\Models\Series;
+use App\Repositories\SeriesRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 class SeriesController extends Controller
 {
+    public function __construct(private SeriesRepository $seriesRepository)
+    {
+
+    }
     public function index()
     {
         return Series::all();
@@ -16,22 +21,44 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $serie = Series::create($request->all());
+        $serie = $this->seriesRepository->add($request);
 
         return response()->json($serie, 201);
     }
 
-    public function show(Series $series)
+    public function show(int $series)
     {
-        return $series;
+        $seriesModel = Series::find($series);
+        if ($seriesModel === null) {
+            return response()->json(['message' => 'Series not found'], 404);
+        }
+
+        return $seriesModel;
     }
 
     public function seasons(int $id)
     {
-        $serie = Series::whereId($id)
-            ->with('seasons.episodes')
-            ->first();
+        $seriesModel = Series::with('seasons.episodes')->find($id);
+        if ($seriesModel === null) {
+            return response()->json(['message' => 'Series not found'], 404);
+        }
 
-        return $serie;
+        return $seriesModel;
+    }
+
+    public function update(int $series, SeriesFormRequest $request)
+    {
+        //$series->fill($request->all());
+        //$series->save();
+
+        Series::where('id', $series)->update($request->all());
+
+        return response('', 200);
+    }
+
+    public function destroy(int $serie)
+    {
+        Series::destroy($serie);
+        return response()->noContent();
     }
 }
