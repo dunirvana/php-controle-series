@@ -46,6 +46,16 @@ class SeriesController extends Controller
         return $seriesModel;
     }
 
+    public function episodes(int $id)
+    {
+        $seriesModel = Series::with('seasons.episodes')->find($id);
+        if ($seriesModel === null) {
+            return response()->json(['message' => 'Series not found'], 404);
+        }
+
+        return $seriesModel->episodes;
+    }
+
     public function update(int $series, SeriesFormRequest $request)
     {
         //$series->fill($request->all());
