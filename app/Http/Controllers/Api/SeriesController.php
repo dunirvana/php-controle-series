@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SeriesFormRequest;
 use App\Models\Series;
 use App\Repositories\SeriesRepository;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Symfony\Component\HttpFoundation\Request;
 
 class SeriesController extends Controller
@@ -25,8 +26,12 @@ class SeriesController extends Controller
         return $query->paginate(5);
     }
 
-    public function store(SeriesFormRequest $request)
+    public function store(SeriesFormRequest $request, Authenticatable $user)
     {
+        if (!$user->tokenCan('series:create')) {
+            return response()->json('Unauthorized', 401);
+        }
+
         $serie = $this->seriesRepository->add($request);
 
         return response()->json($serie, 201);
@@ -62,8 +67,12 @@ class SeriesController extends Controller
         return $seriesModel->episodes;
     }
 
-    public function update(int $series, SeriesFormRequest $request)
+    public function update(int $series, SeriesFormRequest $request, Authenticatable $user)
     {
+        if (!$user->tokenCan('series:update')) {
+            return response()->json('Unauthorized', 401);
+        }
+
         //$series->fill($request->all());
         //$series->save();
 
@@ -72,8 +81,12 @@ class SeriesController extends Controller
         return response('', 200);
     }
 
-    public function destroy(int $serie)
+    public function destroy(int $serie, Authenticatable $user)
     {
+        if (!$user->tokenCan('series:delete')) {
+            return response()->json('Unauthorized', 401);
+        }
+
         Series::destroy($serie);
         return response()->noContent();
     }
