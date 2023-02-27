@@ -19,7 +19,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/series', \App\Http\Controllers\Api\SeriesController::class);
+
 Route::get('/series/{id}/seasons', [\App\Http\Controllers\Api\SeriesController::class, 'seasons']);
 Route::get('/series/{id}/episodes', [\App\Http\Controllers\Api\SeriesController::class, 'episodes']);
+Route::patch('/episodes/{episode}/watched', function (\App\Models\Episode $episode, Request $request) {
+    $episode->watched = $request->watched;
+    $episode->save();
+
+    return $episode;
+});
 
 Route::post('/upload', [\App\Http\Controllers\Api\UploadController::class, 'upload']);
